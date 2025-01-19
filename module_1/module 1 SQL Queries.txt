@@ -1,0 +1,56 @@
+-- QUESTION 3
+-- Up to 1 mile
+select count(trip_distance) as trip_count
+FROM green_tripdata_oct
+WHERE trip_distance <= 1;
+
+-- In between 1 (exclusive) and 3 miles (inclusive)
+select count(trip_distance) as trip_count
+FROM green_tripdata_oct
+WHERE trip_distance > 1 and trip_distance <= 3;
+
+
+-- In between 3 (exclusive) and 7 miles (inclusive),
+select count(trip_distance) as trip_count
+FROM green_tripdata_oct
+WHERE trip_distance > 3 and trip_distance <= 7;
+
+-- In between 7 (exclusive) and 10 miles (inclusive)
+select count(trip_distance) as trip_count
+FROM green_tripdata_oct
+WHERE trip_distance > 7 and trip_distance <= 10;
+
+-- Over 10 miles
+select count(trip_distance) as trip_count
+FROM green_tripdata_oct
+WHERE trip_distance > 10;
+
+-- QUESTION 4
+select trip_distance, lpep_pickup_datetime
+FROM green_tripdata_oct
+WHERE trip_distance = (SELECT MAX(trip_distance) FROM green_tripdata_oct);
+
+
+-- QUESTION 5
+SELECT z."Zone", SUM(total_amount) AS sum_amount
+FROM green_tripdata_oct
+INNER JOIN taxi_zone z
+ON green_tripdata_oct."PULocationID" = z."LocationID"
+INNER JOIN taxi_zone z2
+ON green_tripdata_oct."DOLocationID" = z2."LocationID"
+WHERE DATE(lpep_pickup_datetime)='2019-10-18'
+GROUP BY z."Zone"
+ORDER BY sum_amount desc
+LIMIT 5;
+
+-- QUESTION 6
+SELECT z2."Zone", max(tip_amount) AS max_tip
+FROM green_tripdata_oct
+INNER JOIN taxi_zone z
+ON green_tripdata_oct."PULocationID" = z."LocationID"
+INNER JOIN taxi_zone z2
+ON green_tripdata_oct."DOLocationID" = z2."LocationID"
+WHERE z."Zone"='East Harlem North'
+GROUP BY z2."Zone"
+ORDER BY max_tip desc
+LIMIT 1;
