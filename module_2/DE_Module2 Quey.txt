@@ -1,0 +1,19 @@
+QUESTION 3
+
+SELECT COUNT(*) 
+FROM zoomcamp.yellow_tripdata
+WHERE tpep_pickup_datetime BETWEEN '2020-01-01 00:00:00' AND '2020-12-31 23:59:59';
+
+
+QUESTION 4
+
+SELECT COUNT(*) 
+FROM zoomcamp.green_tripdata
+WHERE lpep_pickup_datetime BETWEEN '2020-01-01 00:00:00' AND '2020-12-31 23:59:59';
+
+
+QUESTION 5
+
+SELECT COUNT(*) 
+FROM zoomcamp.yellow_tripdata
+WHERE tpep_pickup_datetime BETWEEN '2021-03-01 00:00:00' AND '2021-03-31 23:59:59';
