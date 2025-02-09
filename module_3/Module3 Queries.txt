@@ -1,0 +1,42 @@
+CREATE OR REPLACE EXTERNAL TABLE `zoomcamp.ny_taxi_yellow_tripdata`
+OPTIONS (
+  format = 'PARQUET',
+  uris = ['gs://my-zoomcamp-project-12978-kestra/yellow_tripdata_2024-*.parquet']
+);
+
+
+CREATE OR REPLACE TABLE `zoomcamp.ny_taxi_yellow_tripdata_nonpartitioned_tripdata`
+AS SELECT * FROM `zoomcamp.ny_taxi_yellow_tripdata`;
+
+
+-- QUESTION 1
+SELECT count(*) FROM `zoomcamp.ny_taxi_yellow_tripdata`;
+
+
+
+-- QUESTION 2
+SELECT COUNT(DISTINCT(PULocationID)) FROM `zoomcamp.ny_taxi_yellow_tripdata_nonpartitioned_tripdata`;
+
+SELECT COUNT(DISTINCT(PULocationID)) FROM `zoomcamp.ny_taxi_yellow_tripdata`;
+
+
+-- QUESTION 4
+SELECT count(*) FROM `zoomcamp.ny_taxi_yellow_tripdata`
+WHERE fare_amount = 0;
+
+-- QUESTION 5
+CREATE OR REPLACE TABLE `zoomcamp.ny_taxi_yellow_tripdata_partitioned_tripdata`
+PARTITION BY DATE(tpep_dropoff_datetime)
+CLUSTER BY VendorID AS (
+  SELECT * FROM `zoomcamp.ny_taxi_yellow_tripdata`
+);
+
+-- QUESTION 6
+SELECT COUNT(DISTINCT(VendorID)) FROM  `zoomcamp.ny_taxi_yellow_tripdata_partitioned_tripdata`
+WHERE DATE(tpep_dropoff_datetime) >= '2024-03-01' 
+AND DATE(tpep_dropoff_datetime) <= '2024-03-15';
+
+
+SELECT COUNT(DISTINCT(VendorID)) FROM  `zoomcamp.ny_taxi_yellow_tripdata_nonpartitioned_tripdata`
+WHERE DATE(tpep_dropoff_datetime) >= '2024-03-01' 
+AND DATE(tpep_dropoff_datetime) <= '2024-03-15';
