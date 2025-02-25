@@ -1,6 +1,6 @@
 {{ config(materialized='view') }}
  
-with tripdata as 
+with trips_data_all as 
 (
   select *,
     row_number() over(partition by vendorid, tpep_pickup_datetime) as rn
