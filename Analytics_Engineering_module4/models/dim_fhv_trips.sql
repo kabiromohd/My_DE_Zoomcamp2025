@@ -24,7 +24,7 @@ select trips_unioned.tripid,
     dropoff_zone.zone as dropoff_zone,  
     trips_unioned.pickup_datetime, 
     trips_unioned.dropoff_datetime, 
-    trips_unioned.SR_Flag
+    trips_unioned.SR_Flag,
     trips_unioned.Affiliated_base_number
 from trips_unioned
 inner join dim_zones as pickup_zone
