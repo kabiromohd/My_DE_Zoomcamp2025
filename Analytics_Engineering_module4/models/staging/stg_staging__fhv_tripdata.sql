@@ -4,10 +4,13 @@
     )
 }}
 
-with tripdata as (
-    select *,
-    from {{ source('staging','fhv_tripdata') }}
-    where dispatching_base_num is not null
+
+with tripdata as 
+(
+  select *,
+    row_number() over(partition by pickup_datetime) as rn
+  from {{ source('staging','fhv_tripdata') }}
+  where dispatching_base_num is not null 
 )
 select 
     -- identifiers
