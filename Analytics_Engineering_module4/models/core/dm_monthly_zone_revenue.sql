@@ -1,4 +1,8 @@
-{{ config(materialized='table') }}
+{{ 
+    config(
+        materialized='table'
+        ) 
+}}
 
 with trips_data as (
     select * from {{ ref('fact_trips') }}
@@ -25,5 +29,5 @@ with trips_data as (
     avg(passenger_count) as avg_monthly_passenger_count,
     avg(trip_distance) as avg_monthly_trip_distance
 
-    from trips_data_all
+    from trips_data
     group by 1,2,3
